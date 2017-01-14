@@ -1,6 +1,7 @@
 import unittest
 
 from array_problems import find_pair_with_sum
+from array_problems import quick_sort
 
 
 class FindPairWithSumTest(unittest.TestCase):
@@ -23,6 +24,24 @@ class FindPairWithSumTest(unittest.TestCase):
     def test_sum_is_in_array(self):
         pair = find_pair_with_sum([4,3,2], 3)
         assert pair is None
+
+
+class QuickSortTest(unittest.TestCase):
+
+    def test_base_case(self):
+        values = [5, 8, 9, 137, -5, 32, 0]
+        quick_sort(values)
+        assert values == [-5, 0, 5, 8, 9, 32, 137]
+
+    def test_empty(self):
+        values = []
+        quick_sort(values)
+        assert values == []
+
+    def test_one_element(self):
+        values = [2387]
+        quick_sort(values)
+        assert values == [2387]
 
 
 if __name__ == '__main__':
