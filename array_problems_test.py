@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import unittest
 
 from array_problems import find_pair_with_sum
