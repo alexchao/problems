@@ -23,7 +23,7 @@ var Closure = (function() {
         'getNumberLoggersBad': getNumberLoggersBad,
         'getNumberLoggers': getNumberLoggers
     };
-})()
+})();
 
 var badLoggers = Closure.getNumberLoggersBad(10);
 for (var i = 0; i < badLoggers.length; i++) {
