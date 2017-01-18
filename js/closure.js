@@ -18,6 +18,7 @@ var Closure = (function() {
         }
         return fns;
     };
+
     return {
         'getNumberLoggersBad': getNumberLoggersBad,
         'getNumberLoggers': getNumberLoggers
