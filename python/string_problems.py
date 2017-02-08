@@ -26,3 +26,22 @@ def group_anagrams(list_of_words):
             id_to_words[word_id].append(word)
 
     return [set(v) for k, v in id_to_words.items()]
+
+
+def longest_substring(s):
+    longest = ''
+    curr = ''
+    char_last_index = {}
+    for i, char in enumerate(s):
+        if char not in char_last_index:
+            curr += char
+        else:
+            if len(curr) > len(longest):
+                longest = curr
+            curr = s[char_last_index[char] + 1:i + 1]
+        char_last_index[char] = i
+
+    if len(curr) > len(longest):
+        longest = curr
+
+    return longest

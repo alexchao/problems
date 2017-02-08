@@ -4,6 +4,7 @@ import unittest
 
 from string_problems import reverse_words
 from string_problems import group_anagrams
+from string_problems import longest_substring
 
 
 class ReverseWordsTest(unittest.TestCase):
@@ -30,6 +31,27 @@ class GroupAnagramsTest(unittest.TestCase):
         assert set(['the', 'het', 'eht']) in groups
         assert set(['actors', 'costar']) in groups
         assert set(['bottle']) in groups
+
+
+class LongestSubstringTest(unittest.TestCase):
+
+    def test_empty(self):
+        assert longest_substring('abcabcbb') == 'abc'
+
+    def test_no_repeats(self):
+        assert longest_substring('abcdefgh') == 'abcdefgh'
+
+    def test_repeated_character(self):
+        assert longest_substring('bbbbb') == 'b'
+
+    def test_continuation_of_repeated_character(self):
+        assert longest_substring('pwwkew') == 'wke'
+
+    def test_empty(self):
+        assert longest_substring('') == ''
+
+    def test_continguous(self):
+        assert longest_substring('abcdaxyzb') == 'bcdaxyz'
 
 
 if __name__ == '__main__':
