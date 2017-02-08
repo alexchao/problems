@@ -29,7 +29,7 @@ var mergeSortTests = {
     'twoElements': function() {
         var d = [2,1];
         S.mergeSort(d);
-        A.arrayEqual(d, [2,1]);
+        A.arrayEqual(d, [1,2]);
     }
 };
 
