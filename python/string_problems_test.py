@@ -36,22 +36,25 @@ class GroupAnagramsTest(unittest.TestCase):
 class LongestSubstringTest(unittest.TestCase):
 
     def test_empty(self):
-        assert longest_substring('abcabcbb') == 'abc'
+        assert longest_substring('abcabcbb') == 3 # 'abc'
 
     def test_no_repeats(self):
-        assert longest_substring('abcdefgh') == 'abcdefgh'
+        assert longest_substring('abcdefgh') == 8 # 'abcdefgh'
 
     def test_repeated_character(self):
-        assert longest_substring('bbbbb') == 'b'
+        assert longest_substring('bbbbb') == 1 # 'b'
 
     def test_continuation_of_repeated_character(self):
-        assert longest_substring('pwwkew') == 'wke'
+        assert longest_substring('pwwkew') == 3 # 'wke'
 
     def test_empty(self):
-        assert longest_substring('') == ''
+        assert longest_substring('') == 0 # ''
 
     def test_continguous(self):
-        assert longest_substring('abcdaxyzb') == 'bcdaxyz'
+        assert longest_substring('abcdaxyzb') == 7 # 'bcdaxyz'
+
+    def test_palindrome(self):
+        assert longest_substring('abba') == 2 # 'ab'
 
 
 if __name__ == '__main__':

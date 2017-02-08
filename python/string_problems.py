@@ -29,19 +29,12 @@ def group_anagrams(list_of_words):
 
 
 def longest_substring(s):
-    longest = ''
-    curr = ''
+    start = max_length = 0
     char_last_index = {}
     for i, char in enumerate(s):
-        if char not in char_last_index:
-            curr += char
+        if char in char_last_index and start <= char_last_index[char]:
+            start = char_last_index[char] + 1
         else:
-            if len(curr) > len(longest):
-                longest = curr
-            curr = s[char_last_index[char] + 1:i + 1]
+            max_length = max(max_length, i - start + 1)
         char_last_index[char] = i
-
-    if len(curr) > len(longest):
-        longest = curr
-
-    return longest
+    return max_length
