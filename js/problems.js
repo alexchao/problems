@@ -34,7 +34,7 @@ var Sort = (function() {
     };
 
     var _mergeSort = function(d, i, j) {
-        if (j - i == 0) { return; }
+        if (j - i < 1) { return; }
         var middle = Math.floor((j + i) / 2);
         _mergeSort(d, i, middle);
         _mergeSort(d, middle + 1, j);
