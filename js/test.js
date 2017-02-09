@@ -32,10 +32,9 @@ var runTests = function(tests) {
     Object.keys(tests).forEach(function(testName) {
         try {
             tests[testName]();
-            console.log('Test OK "' + testName + '"');
+            console.log(`Test OK "${testName}"`);
         } catch (e) {
-            console.log('Test FAIL "' + testName
-                    + '": "' + e.message + '"');
+            console.log(`Test FAIL "${testName}": "${e.message}"`);
         }
     });
 };
