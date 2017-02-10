@@ -6,6 +6,7 @@ import unittest
 
 from word_search import CorpusIterator
 from word_search import CorpusPosition
+from word_search import find_pairs
 
 
 def assert_equal_position(p1, p2):
@@ -96,6 +97,13 @@ class CorpusIteratorTest(unittest.TestCase):
         assert it.has_next()
         assert_equal_position(it.get_next(), CorpusPosition(1, 1))
         assert not it.has_next()
+
+
+class FindPairsTest(unittest.TestCase):
+
+    def test_find_one(self):
+        pairs = find_pairs(['XYZABXYZ'], 'A', 'B')
+        assert_equal_position(pairs[0], CorpusPosition(0, 3))
 
 
 

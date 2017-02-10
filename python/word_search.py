@@ -115,3 +115,48 @@ class SimpleCorpusIterator:
 
 
 CorpusIterator = LazyCorpusIterator
+
+
+def find_pairs(corpus, a, b):
+    """Find adjacent occurrences of a and b (with a necessarily preceding b)."""
+    pairs = []
+    it1 = CorpusIterator(corpus, a)
+    it2 = CorpusIterator(corpus, b)
+
+    def _is_pair(x, y):
+        return x.document_id == y.document_id and x.index == y.index - 1
+
+    def _cmp(x, y):
+        if x.document_id == y.document_id:
+            if x.index == y.index:
+                return 0
+            elif x.index > y.index:
+                return 1
+            else:
+                return -1
+        elif x.document_id > y.document_id:
+            return 1
+        else:
+            return -1
+
+    w1 = it1.get_next()
+    w2 = it2.get_next()
+    while w1 is not None and w2 is not None:
+        cmp_value = _cmp(w1, w2)
+        if cmp_value == -1:
+            # w1 behind w2
+            if _is_pair(w1, w2):
+                pairs.append(w1)
+                w1 = it1.get_next()
+                w2 = it2.get_next()
+            else:
+                it1.skip(CorpusPosition(w2.document_id, w2.index - 1))
+                w1 = it1.get_next()
+        elif cmp_value == 1:
+            # w1 ahead of w2
+            it2.skip(w1)
+            w2 = it2.get_next()
+        else:
+            raise ValueError('Iterators are tracking same token')
+
+    return pairs
