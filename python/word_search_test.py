@@ -114,23 +114,14 @@ class CorpusIteratorTest(unittest.TestCase):
 
     def test_skip_to_bad_position(self):
         it = CorpusIterator(self.corpus, 'A')
-        try:
+        with self.assertRaises(ValueError):
             it.skip(CorpusPosition(10, 0))
-            assert False, 'Expected ValueError for skip to bad position'
-        except ValueError:
-            pass
 
-        try:
+        with self.assertRaises(ValueError):
             it.skip(CorpusPosition(0, 100))
-            assert False, 'Expected ValueError for skip to out of bounds index'
-        except ValueError:
-            pass
 
-        try:
+        with self.assertRaises(ValueError):
             it.skip(CorpusPosition(0, -1))
-            assert False, 'Expected ValueError for skip to negative index'
-        except ValueError:
-            pass
 
 
 class FindPairsTest(unittest.TestCase):
