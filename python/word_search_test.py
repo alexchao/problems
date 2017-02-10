@@ -37,36 +37,36 @@ class CorpusIteratorTest(unittest.TestCase):
 
     def test_empty_corpus(self):
         it = CorpusIterator([], 'A')
-        assert not it.has_next()
-        assert it.get_next() is None
+        self.assertFalse(it.has_next())
+        self.assertIsNone(it.get_next())
 
     def test_basic(self):
         it = CorpusIterator(self.corpus, 'Y')
-        assert it.has_next()
+        self.assertTrue(it.has_next())
         assert_equal_position(it.get_next(), CorpusPosition(0, 24))
-        assert it.has_next()
+        self.assertTrue(it.has_next())
         assert_equal_position(it.get_next(), CorpusPosition(2, 4))
-        assert it.has_next()
+        self.assertTrue(it.has_next())
         assert_equal_position(it.get_next(), CorpusPosition(3, 1))
-        assert not it.has_next()
-        assert it.get_next() is None
+        self.assertFalse(it.has_next())
+        self.assertIsNone(it.get_next())
 
     def test_bookend_occurrences(self):
         it = CorpusIterator(self.corpus_bookend, 'S')
-        assert it.has_next()
+        self.assertTrue(it.has_next())
         assert_equal_position(it.get_next(), CorpusPosition(0, 0))
-        assert it.has_next()
+        self.assertTrue(it.has_next())
         assert_equal_position(it.get_next(), CorpusPosition(0, 5))
-        assert it.has_next()
+        self.assertTrue(it.has_next())
         assert_equal_position(it.get_next(), CorpusPosition(1, 0))
-        assert it.has_next()
+        self.assertTrue(it.has_next())
         assert_equal_position(it.get_next(), CorpusPosition(1, 2))
-        assert it.has_next()
+        self.assertTrue(it.has_next())
         assert_equal_position(it.get_next(), CorpusPosition(2, 0))
-        assert it.has_next()
+        self.assertTrue(it.has_next())
         assert_equal_position(it.get_next(), CorpusPosition(2, 1))
-        assert not it.has_next()
-        assert it.get_next() is None
+        self.assertFalse(it.has_next())
+        self.assertIsNone(it.get_next())
 
     def test_only_get_next(self):
         it = CorpusIterator(self.corpus, 'X')
@@ -90,27 +90,27 @@ class CorpusIteratorTest(unittest.TestCase):
         assert_equal_position(it.get_next(), CorpusPosition(0, 6))
         assert_equal_position(it.get_next(), CorpusPosition(0, 7))
         assert_equal_position(it.get_next(), CorpusPosition(0, 12))
-        assert it.has_next()
+        self.assertTrue(it.has_next())
         assert_equal_position(it.get_next(), CorpusPosition(1, 0))
-        assert it.has_next()
+        self.assertTrue(it.has_next())
         assert_equal_position(it.get_next(), CorpusPosition(1, 1))
-        assert not it.has_next()
+        self.assertFalse(it.has_next())
 
     def test_skip(self):
         it = CorpusIterator(self.corpus_consecutive, 'D')
 
         it.skip(CorpusPosition(0, 10))
-        assert it.has_next()
+        self.assertTrue(it.has_next())
         assert_equal_position(it.get_next(), CorpusPosition(0, 12))
 
         it.skip(CorpusPosition(0, 1))
-        assert it.has_next()
+        self.assertTrue(it.has_next())
         assert_equal_position(it.get_next(), CorpusPosition(0, 3))
 
         it.skip(CorpusPosition(1, 1))
-        assert it.has_next()
+        self.assertTrue(it.has_next())
         assert_equal_position(it.get_next(), CorpusPosition(1, 1))
-        assert not it.has_next()
+        self.assertFalse(it.has_next())
 
     def test_skip_to_bad_position(self):
         it = CorpusIterator(self.corpus, 'A')
