@@ -36,6 +36,7 @@ class LazyCorpusIterator:
         n = self._staged_next
         if n is not None:
             # advance
+            # TODO: what is advanced position doesn't exist?
             self._current_document_id = n.document_id
             self._current_query_index = n.index + 1
         # unstage
@@ -150,6 +151,7 @@ def find_pairs(corpus, a, b):
                 w1 = it1.get_next()
                 w2 = it2.get_next()
             else:
+                # TODO: what if this skip results in a bad position (e.g. -1)?
                 it1.skip(CorpusPosition(w2.document_id, w2.index - 1))
                 w1 = it1.get_next()
         elif cmp_value == 1:
