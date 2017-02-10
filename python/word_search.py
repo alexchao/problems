@@ -23,8 +23,7 @@ class LazyCorpusIterator:
     def __init__(self, corpus, query):
         self._corpus = corpus
         self._query = query
-        self._current_document_id = 0
-        self._current_query_index = 0
+        self._next_search_pos = CorpusPosition(0, 0) if corpus else None
         self._has_staged = False
         self._staged_next = None
 
@@ -35,11 +34,10 @@ class LazyCorpusIterator:
     def get_next(self):
         self._stage_next_if_needed()
         n = self._staged_next
-        if n is not None:
-            # advance
-            # TODO: what if advanced position doesn't exist?
-            self._current_document_id = n.document_id
-            self._current_query_index = n.index + 1
+
+        # advance search position
+        self._next_search_pos = self._get_next_position(n) if n else None
+
         # unstage
         self._staged_next = None
         self._has_staged = False
@@ -52,8 +50,7 @@ class LazyCorpusIterator:
 
         self._staged_next = None
         self._has_staged = False
-        self._current_document_id = position.document_id
-        self._current_query_index = position.index
+        self._next_search_pos = position
 
     def _stage_next_if_needed(self):
         if not self._staged_next and not self._has_staged:
@@ -61,14 +58,19 @@ class LazyCorpusIterator:
             self._has_staged = True
 
     def _get_next(self):
-        document_id = self._current_document_id
-        search_index = self._current_query_index
-        p = CorpusPosition(document_id, search_index)
-        if not self._is_position_in_corpus(p):
-            warnings.warn('Starting search from a bad location: {0}'.format(p))
+        if not self._next_search_pos:
+            return None
 
+        if not self._is_position_in_corpus(self._next_search_pos):
+            warnings.warn('Starting search from a bad location: {0}'.format(
+                self._next_search_pos))
+
+        # use local variables since we don't want to permanently advance
+        # the search position
+        document_id = self._next_search_pos.document_id
+        search_index = self._next_search_pos.index
         index = -1
-        while index == -1 and 0 <= document_id and document_id < len(self._corpus):
+        while index == -1 and self._is_document_in_corpus(document_id):
             index = self._find_query(
                 self._query,
                 self._corpus[document_id],
@@ -88,7 +90,7 @@ class LazyCorpusIterator:
         if len(self._corpus) == 0:
             return False
 
-        if p.document_id < 0 or p.document_id >= len(self._corpus):
+        if not self._is_document_in_corpus(p.document_id):
             return False
 
         if p.index < 0:
@@ -99,6 +101,24 @@ class LazyCorpusIterator:
             return False
 
         return True
+
+    def _is_document_in_corpus(self, document_id):
+        if not self._corpus:
+            return False
+
+        return 0 <= document_id and document_id < len(self._corpus)
+
+    def _get_next_position(self, p):
+        new_p = CorpusPosition(p.document_id, p.index + 1)
+        if self._is_position_in_corpus(new_p):
+            return new_p
+
+        new_p = CorpusPosition(p.document_id + 1, 0)
+        if self._is_position_in_corpus(new_p):
+            return new_p
+
+        return None
+
 
     @staticmethod
     def _find_query(query, text, start_index):
