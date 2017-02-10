@@ -139,6 +139,20 @@ class FindPairsTest(unittest.TestCase):
         pairs = find_pairs(['XYZABXYZ'], 'A', 'B')
         assert_equal_position(pairs[0], CorpusPosition(0, 3))
 
+    def test_two_in_a_row(self):
+        pairs = find_pairs(['XYZABABXYZ'], 'A', 'B')
+        assert_equal_position(pairs[0], CorpusPosition(0, 3))
+        assert_equal_position(pairs[1], CorpusPosition(0, 5))
+
+    def test_two_spaced_out(self):
+        pairs = find_pairs(['XYZABJKLABXYZ'], 'A', 'B')
+        assert_equal_position(pairs[0], CorpusPosition(0, 3))
+        assert_equal_position(pairs[1], CorpusPosition(0, 8))
+
+    def test_different_documents(self):
+        pairs = find_pairs(['XYZABJKL', 'STUSTUABSTU'], 'A', 'B')
+        assert_equal_position(pairs[0], CorpusPosition(0, 3))
+        assert_equal_position(pairs[1], CorpusPosition(1, 6))
 
 
 if __name__ == '__main__':
