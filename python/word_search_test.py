@@ -23,6 +23,11 @@ class CorpusIteratorTest(unittest.TestCase):
         'XYZ'
     ]
 
+    corpus_consecutive = [
+        'ABCDDDDDEFGHD',
+        'DD'
+    ]
+
     def test_basic(self):
         it = CorpusIterator(self.corpus, 'Y')
         assert it.has_next()
@@ -47,6 +52,20 @@ class CorpusIteratorTest(unittest.TestCase):
         it.has_next()
         it.has_next()
         assert_equal_position(it.get_next(), CorpusPosition(2, 3))
+
+    def test_finds_consecutives(self):
+        it = CorpusIterator(self.corpus_consecutive, 'D')
+        assert_equal_position(it.get_next(), CorpusPosition(0, 3))
+        assert_equal_position(it.get_next(), CorpusPosition(0, 4))
+        assert_equal_position(it.get_next(), CorpusPosition(0, 5))
+        assert_equal_position(it.get_next(), CorpusPosition(0, 6))
+        assert_equal_position(it.get_next(), CorpusPosition(0, 7))
+        assert_equal_position(it.get_next(), CorpusPosition(0, 12))
+        assert it.has_next()
+        assert_equal_position(it.get_next(), CorpusPosition(1, 0))
+        assert it.has_next()
+        assert_equal_position(it.get_next(), CorpusPosition(1, 1))
+        assert not it.has_next()
 
 
 if __name__ == '__main__':
