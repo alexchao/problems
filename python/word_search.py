@@ -22,12 +22,8 @@ class LazyCorpusIterator:
     def __init__(self, corpus, query):
         self._corpus = corpus
         self._query = query
-        self._current_document_id = -1
-        self._current_query_index = -1
-
-        if len(self._corpus) > 0:
-            self._current_document_id = 0
-
+        self._current_document_id = 0
+        self._current_query_index = 0
         self._has_staged = False
         self._staged_next = None
 
@@ -41,7 +37,7 @@ class LazyCorpusIterator:
         if n is not None:
             # advance
             self._current_document_id = n.document_id
-            self._current_query_index = n.index
+            self._current_query_index = n.index + 1
         # unstage
         self._staged_next = None
         self._has_staged = False
@@ -60,12 +56,12 @@ class LazyCorpusIterator:
             index = self._find_query(
                 self._query,
                 self._corpus[document_id],
-                search_index + 1)
+                search_index)
 
             if index == -1:
                 # move on to the next document
                 document_id += 1
-                search_index = -1
+                search_index = 0
 
         if index == -1:
             return None
@@ -107,4 +103,4 @@ class SimpleCorpusIterator:
         return self._elements[self._pointer]
 
 
-CorpusIterator = SimpleCorpusIterator
+CorpusIterator = LazyCorpusIterator
