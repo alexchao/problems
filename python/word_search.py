@@ -46,6 +46,9 @@ class LazyCorpusIterator:
 
     def skip(self, position):
         """Skip iterator to a desired CorpusPosition."""
+        if not self._is_position_in_corpus(position):
+            raise ValueError('{0} not in corpus'.format(position))
+
         self._staged_next = None
         self._has_staged = False
         self._current_document_id = position.document_id
@@ -75,6 +78,22 @@ class LazyCorpusIterator:
             return None
 
         return CorpusPosition(document_id, index)
+
+    def _is_position_in_corpus(self, p):
+        if len(self._corpus) == 0:
+            return False
+
+        if p.document_id < 0 or p.document_id >= len(self._corpus):
+            return False
+
+        if p.index < 0:
+            return False
+
+        text = self._corpus[p.document_id]
+        if p.index >= len(text):
+            return False
+
+        return True
 
     @staticmethod
     def _find_query(query, text, start_index):
