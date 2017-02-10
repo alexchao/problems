@@ -110,7 +110,7 @@ class SimpleCorpusIterator:
         self._pointer += 1
         return self._elements[self._pointer]
 
-    # This iterator's skip() method would be a bit tricker to implement.
+    # This iterator's skip() method would be a bit trickier to implement.
     def skip(self, position):
         raise NotImplementedError()
 
