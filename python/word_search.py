@@ -52,6 +52,8 @@ class LazyCorpusIterator:
         self._has_staged = False
         self._next_search_pos = position
 
+    # TODO: `if_needed` is smelly. compare search position to last result
+    # instead to determine if we need to search.
     def _stage_next_if_needed(self):
         if not self._staged_next and not self._has_staged:
             self._staged_next = self._get_next()
