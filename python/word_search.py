@@ -43,6 +43,13 @@ class LazyCorpusIterator:
         self._has_staged = False
         return n
 
+    def skip(self, position):
+        """Skip iterator to a desired CorpusPosition."""
+        self._staged_next = None
+        self._has_staged = False
+        self._current_document_id = position.document_id
+        self._current_query_index = position.index
+
     def _stage_next_if_needed(self):
         if not self._staged_next and not self._has_staged:
             self._staged_next = self._get_next()
@@ -101,6 +108,10 @@ class SimpleCorpusIterator:
 
         self._pointer += 1
         return self._elements[self._pointer]
+
+    # This iterator's skip() method would be a bit tricker to implement.
+    def skip(self, position):
+        raise NotImplementedError()
 
 
 CorpusIterator = LazyCorpusIterator

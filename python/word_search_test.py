@@ -67,6 +67,23 @@ class CorpusIteratorTest(unittest.TestCase):
         assert_equal_position(it.get_next(), CorpusPosition(1, 1))
         assert not it.has_next()
 
+    def test_skip(self):
+        it = CorpusIterator(self.corpus_consecutive, 'D')
+
+        it.skip(CorpusPosition(0, 10))
+        assert it.has_next()
+        assert_equal_position(it.get_next(), CorpusPosition(0, 12))
+
+        it.skip(CorpusPosition(0, 1))
+        assert it.has_next()
+        assert_equal_position(it.get_next(), CorpusPosition(0, 3))
+
+        it.skip(CorpusPosition(1, 1))
+        assert it.has_next()
+        assert_equal_position(it.get_next(), CorpusPosition(1, 1))
+        assert not it.has_next()
+
+
 
 if __name__ == '__main__':
     unittest.main()
