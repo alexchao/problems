@@ -77,4 +77,34 @@ class LazyCorpusIterator:
         return text.find(query, start_index)
 
 
-CorpusIterator = LazyCorpusIterator
+class SimpleCorpusIterator:
+    """Pre-process version of the iterator."""
+
+    def __init__(self, corpus, query):
+        self._elements = []
+        self._pointer = -1
+
+        for i, document in enumerate(corpus):
+            search_position = 0
+            while True:
+                found_index = document.find(query, search_position)
+                if found_index >= 0:
+                    self._elements.append(CorpusPosition(i, found_index))
+                    search_position = found_index + 1
+                else:
+                    break
+
+        self._num_elements = len(self._elements)
+
+    def has_next(self):
+        return self._num_elements > 0 and self._pointer + 1 < self._num_elements
+
+    def get_next(self):
+        if not self.has_next():
+            return None
+
+        self._pointer += 1
+        return self._elements[self._pointer]
+
+
+CorpusIterator = SimpleCorpusIterator
