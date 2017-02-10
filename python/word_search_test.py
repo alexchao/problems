@@ -28,6 +28,20 @@ class CorpusIteratorTest(unittest.TestCase):
         'DD'
     ]
 
+    def test_empty_corpus(self):
+        it = CorpusIterator([], 'A')
+        assert not it.has_next()
+        assert it.get_next() is None
+
+        it = CorpusIterator([''], 'A')
+        assert not it.has_next()
+        assert it.get_next() is None
+
+        it = CorpusIterator(['', ''], 'A')
+        assert not it.has_next()
+        assert it.get_next() is None
+
+
     def test_basic(self):
         it = CorpusIterator(self.corpus, 'Y')
         assert it.has_next()
