@@ -34,15 +34,6 @@ class CorpusIteratorTest(unittest.TestCase):
         assert not it.has_next()
         assert it.get_next() is None
 
-        it = CorpusIterator([''], 'A')
-        assert not it.has_next()
-        assert it.get_next() is None
-
-        it = CorpusIterator(['', ''], 'A')
-        assert not it.has_next()
-        assert it.get_next() is None
-
-
     def test_basic(self):
         it = CorpusIterator(self.corpus, 'Y')
         assert it.has_next()

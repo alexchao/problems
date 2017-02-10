@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from collections import namedtuple
+import warnings
 
 
 class CorpusPosition(namedtuple('CorpusPosition', ['document_id', 'index'])):
@@ -62,6 +63,10 @@ class LazyCorpusIterator:
     def _get_next(self):
         document_id = self._current_document_id
         search_index = self._current_query_index
+        p = CorpusPosition(document_id, search_index)
+        if not self._is_position_in_corpus(p):
+            warnings.warn('Starting search from a bad location: {0}'.format(p))
+
         index = -1
         while index == -1 and 0 <= document_id and document_id < len(self._corpus):
             index = self._find_query(
