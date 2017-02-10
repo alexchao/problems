@@ -29,6 +29,12 @@ class CorpusIteratorTest(unittest.TestCase):
         'DD'
     ]
 
+    corpus_bookend = [
+        'SHHHHS',
+        'SHS',
+        'SS'
+    ]
+
     def test_empty_corpus(self):
         it = CorpusIterator([], 'A')
         assert not it.has_next()
@@ -42,6 +48,23 @@ class CorpusIteratorTest(unittest.TestCase):
         assert_equal_position(it.get_next(), CorpusPosition(2, 4))
         assert it.has_next()
         assert_equal_position(it.get_next(), CorpusPosition(3, 1))
+        assert not it.has_next()
+        assert it.get_next() is None
+
+    def test_bookend_occurrences(self):
+        it = CorpusIterator(self.corpus_bookend, 'S')
+        assert it.has_next()
+        assert_equal_position(it.get_next(), CorpusPosition(0, 0))
+        assert it.has_next()
+        assert_equal_position(it.get_next(), CorpusPosition(0, 5))
+        assert it.has_next()
+        assert_equal_position(it.get_next(), CorpusPosition(1, 0))
+        assert it.has_next()
+        assert_equal_position(it.get_next(), CorpusPosition(1, 2))
+        assert it.has_next()
+        assert_equal_position(it.get_next(), CorpusPosition(2, 0))
+        assert it.has_next()
+        assert_equal_position(it.get_next(), CorpusPosition(2, 1))
         assert not it.has_next()
         assert it.get_next() is None
 
@@ -108,7 +131,6 @@ class CorpusIteratorTest(unittest.TestCase):
             assert False, 'Expected ValueError for skip to negative index'
         except ValueError:
             pass
-
 
 
 class FindPairsTest(unittest.TestCase):
