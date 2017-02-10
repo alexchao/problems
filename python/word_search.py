@@ -36,7 +36,7 @@ class LazyCorpusIterator:
         n = self._staged_next
         if n is not None:
             # advance
-            # TODO: what is advanced position doesn't exist?
+            # TODO: what if advanced position doesn't exist?
             self._current_document_id = n.document_id
             self._current_query_index = n.index + 1
         # unstage
