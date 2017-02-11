@@ -126,6 +126,14 @@ class CorpusIteratorTest(unittest.TestCase):
 
 class FindPairsTest(unittest.TestCase):
 
+    def test_find_none(self):
+        self.assertEqual(find_pairs([], 'A', 'B'), [])
+        self.assertEqual(find_pairs(['A'], 'A', 'B'), [])
+        self.assertEqual(find_pairs(['B'], 'A', 'B'), [])
+        self.assertEqual(find_pairs(['BA'], 'A', 'B'), [])
+        self.assertEqual(find_pairs(['A', 'B'], 'A', 'B'), [])
+        self.assertEqual(find_pairs(['B', 'A'], 'A', 'B'), [])
+
     def test_find_one(self):
         pairs = find_pairs(['XYZABXYZ'], 'A', 'B')
         assert_equal_position(pairs[0], CorpusPosition(0, 3))
@@ -144,6 +152,16 @@ class FindPairsTest(unittest.TestCase):
         pairs = find_pairs(['XYZABJKL', 'STUSTUABSTU'], 'A', 'B')
         assert_equal_position(pairs[0], CorpusPosition(0, 3))
         assert_equal_position(pairs[1], CorpusPosition(1, 6))
+
+    def test_interleaved(self):
+        pairs = find_pairs(['ABBAABBAAAXBXAB'], 'A', 'B')
+        assert_equal_position(pairs[0], CorpusPosition(0, 0))
+        assert_equal_position(pairs[1], CorpusPosition(0, 4))
+        assert_equal_position(pairs[2], CorpusPosition(0, 13))
+
+    def test_starts_with_second_token(self):
+        pairs = find_pairs(['BAB'], 'A', 'B')
+        assert_equal_position(pairs[0], CorpusPosition(0, 1))
 
 
 if __name__ == '__main__':

@@ -197,8 +197,10 @@ def find_pairs(corpus, a, b):
                 w1 = it1.get_next()
                 w2 = it2.get_next()
             else:
-                # TODO: what if this skip results in a bad position (e.g. -1)?
-                it1.skip(CorpusPosition(w2.document_id, w2.index - 1))
+                if w2.index == 0:
+                    it1.skip(w2)
+                else:
+                    it1.skip(CorpusPosition(w2.document_id, w2.index - 1))
                 w1 = it1.get_next()
         elif cmp_value == 1:
             # w1 ahead of w2
