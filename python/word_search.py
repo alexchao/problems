@@ -11,6 +11,10 @@ class CorpusPosition(namedtuple('CorpusPosition', ['document_id', 'index'])):
     def __repr__(self):
         return self.__str__()
 
+    def __eq__(self, other):
+        return self.document_id == other.document_id and \
+                self.index == other.index
+
 
 class LazyCorpusIterator:
     """Iterates over occurrences of a given word in a corpus of `Document`s
