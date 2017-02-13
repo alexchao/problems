@@ -51,4 +51,59 @@ var Sort = (function() {
 })();
 
 
+var Misc = (function() {
+
+    var isAdditiveNumber = function(s) {
+        return _isAdditiveNumber([], s);
+    };
+
+    var _isAdditiveNumber = function(progress, remaining) {
+        if (remaining.length === 0 && progress.length > 2) {
+            return true;
+        }
+
+        if (remaining[0] === '0') {
+            return false;
+        }
+
+        if (progress.length < 2) {
+            var maxLength = remaining.length - (progress.length === 0 ? 2 : 1);
+            for (var l = 1; l <= maxLength; l++) {
+                var x = remaining.substr(0, l);
+                var newProgress = progress.slice();
+                newProgress.push(parseInt(x));
+                if (_isAdditiveNumber(newProgress, remaining.substr(l))) {
+                    return true;
+                }
+            }
+            return false;
+        } else {
+            var x = progress[progress.length - 2];
+            var y = progress[progress.length - 1];
+            var sum = x + y;
+            var sumAsString = sum + '';
+            var sumLength = sumAsString.length;
+
+            if (remaining.length < sumLength) {
+                return false;
+            }
+
+            if (remaining.substr(0, sumLength) === sumAsString) {
+                var newProgress = progress.slice();
+                newProgress.push(sum);
+                return _isAdditiveNumber(newProgress,
+                    remaining.substr(sumLength));
+            }
+            return false;
+        }
+    };
+
+    return {
+        'isAdditiveNumber': isAdditiveNumber
+    };
+
+})();
+
+
 exports.Sort = Sort;
+exports.Misc = Misc;
