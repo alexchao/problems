@@ -54,7 +54,29 @@ var Sort = (function() {
 var Misc = (function() {
 
     var isAdditiveNumber = function(s) {
-        return _isAdditiveNumber([], s);
+        if (s.length < 3) { return false; }
+
+        // leading zeros not allowed
+        if (s[0] === '0') { return false; }
+
+        // select initial two numbers
+        for (var len1 = 1; len1 <= s.length - 2; len1++) {
+            var a = parseInt(s.substr(0, len1));
+            var remaining = s.substr(len1);
+            for (var len2 = 1; len2 <= remaining.length - 1; len2++) {
+                // leading zeros not allowed, but 0 itself is allowed
+                if (remaining[0] !== '0' || len2 === 1) {
+                    var b = parseInt(remaining.substr(0, len2));
+                    var progress = [a, b];
+                    var newRemaining = remaining.substr(len2);
+                    if (_isAdditiveNumber(progress, newRemaining)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     };
 
     var _isAdditiveNumber = function(progress, remaining) {
@@ -66,36 +88,23 @@ var Misc = (function() {
             return false;
         }
 
-        if (progress.length < 2) {
-            var maxLength = remaining.length - (progress.length === 0 ? 2 : 1);
-            for (var l = 1; l <= maxLength; l++) {
-                var x = remaining.substr(0, l);
-                var newProgress = progress.slice();
-                newProgress.push(parseInt(x));
-                if (_isAdditiveNumber(newProgress, remaining.substr(l))) {
-                    return true;
-                }
-            }
-            return false;
-        } else {
-            var x = progress[progress.length - 2];
-            var y = progress[progress.length - 1];
-            var sum = x + y;
-            var sumAsString = sum + '';
-            var sumLength = sumAsString.length;
+        var x = progress[progress.length - 2];
+        var y = progress[progress.length - 1];
+        var sum = x + y;
+        var sumAsString = sum + '';
+        var sumLength = sumAsString.length;
 
-            if (remaining.length < sumLength) {
-                return false;
-            }
-
-            if (remaining.substr(0, sumLength) === sumAsString) {
-                var newProgress = progress.slice();
-                newProgress.push(sum);
-                return _isAdditiveNumber(newProgress,
-                    remaining.substr(sumLength));
-            }
+        if (remaining.length < sumLength) {
             return false;
         }
+
+        if (remaining.substr(0, sumLength) === sumAsString) {
+            var newProgress = progress.slice();
+            newProgress.push(sum);
+            return _isAdditiveNumber(newProgress,
+                remaining.substr(sumLength));
+        }
+        return false;
     };
 
     return {

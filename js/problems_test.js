@@ -64,6 +64,9 @@ TestCases.isAdditiveNumberTests = {
     'notAdditiveNumber': function() {
         A.assertFalse(M.isAdditiveNumber('972420823098'));
     },
+    'oneOhOne': function() {
+        A.assertTrue(M.isAdditiveNumber('101'));
+    },
     'base': function() {
         A.assertTrue(M.isAdditiveNumber('112358'));
     }
