@@ -53,6 +53,30 @@ var Sort = (function() {
 
 var Misc = (function() {
 
+    let getLongestCommonPrefix = function(strings) {
+        let _cmp = function(a, b) {
+            if (a.length < b.length) {
+                return -1;
+            } else if (a.length > b.length) {
+                return 1;
+            } else { return 0; }
+        };
+        const sortedStrings = strings.slice();
+        sortedStrings.sort(_cmp);
+
+        let lcp = '';
+        let shortest = sortedStrings.shift();
+        for (let i = 0; i < shortest.length; i++) {
+            for (let j = 0; j < sortedStrings.length; j++) {
+                if (sortedStrings[j][i] !== shortest[i]) {
+                    return lcp;
+                }
+            }
+            lcp += shortest[i];
+        }
+        return lcp;
+    };
+
     var isAdditiveNumber = function(s) {
         if (s.length < 3) { return false; }
 
@@ -108,7 +132,8 @@ var Misc = (function() {
     };
 
     return {
-        'isAdditiveNumber': isAdditiveNumber
+        'isAdditiveNumber': isAdditiveNumber,
+        'getLongestCommonPrefix': getLongestCommonPrefix
     };
 
 })();

@@ -73,5 +73,32 @@ TestCases.isAdditiveNumberTests = {
 };
 
 
+TestCases.getLongestCommonPrefixTests = {
+    'base': function() {
+        let strings = ['alexchao', 'alex', 'alexander'];
+        A.assertStrictEqual(
+            M.getLongestCommonPrefix(strings),
+            'alex'
+            );
+    },
+    'allEqual': function() {
+        let strings = ['brian', 'brian', 'brian'];
+        A.assertStrictEqual(
+            M.getLongestCommonPrefix(strings),
+            'brian'
+            );
+    },
+    'noCommonPrefix': function() {
+        let strings = ['alexander', 'brian', 'eric'];
+        A.assertStrictEqual(M.getLongestCommonPrefix(strings), '');
+    },
+    'singleCharPrefix': function() {
+        let strings = ['alexander', 'apple', 'artichoke'];
+        A.assertStrictEqual(M.getLongestCommonPrefix(strings), 'a');
+    }
+};
+
+
 Test.runTests(TestCases.mergeSortTests);
 Test.runTests(TestCases.isAdditiveNumberTests);
+Test.runTests(TestCases.getLongestCommonPrefixTests);
