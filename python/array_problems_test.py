@@ -2,6 +2,7 @@
 import unittest
 
 from array_problems import find_pair_with_sum
+from array_problems import first_missing_positive
 from array_problems import quick_sort
 
 
@@ -43,6 +44,29 @@ class QuickSortTest(unittest.TestCase):
         values = [2387]
         quick_sort(values)
         assert values == [2387]
+
+
+class FirstMissingPositiveTest(unittest.TestCase):
+
+    def test_one(self):
+        nums = [0, -1, -2]
+        self.assertEqual(first_missing_positive(nums), 1)
+
+    def test_base_case(self):
+        nums = [1, 2, 0]
+        self.assertEqual(first_missing_positive(nums), 3)
+
+    def test_inner_number(self):
+        nums = [3, 4, -1, 1]
+        self.assertEqual(first_missing_positive(nums), 2)
+
+    def test_many_gaps(self):
+        nums = [1, 7, 9, 13, 15, 2, 3, 5, 6]
+        self.assertEqual(first_missing_positive(nums), 4)
+
+    def test_fill_many_gaps(self):
+        nums = [2, 4, 6, 9, 11, 10, 8, 7, 5, 3]
+        self.assertEqual(first_missing_positive(nums), 1)
 
 
 if __name__ == '__main__':

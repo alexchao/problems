@@ -46,3 +46,29 @@ def quick_sort(x):
             _quick_sort(values, pivot_index + 1, hi)
 
     _quick_sort(x, 0, len(x) - 1)
+
+
+def first_missing_positive(nums):
+    gaps = [(1, float('inf'))]
+
+    for n in nums:
+        if n < 1:
+            continue
+        for i, g in enumerate(gaps):
+            # TODO: optimize this search
+            if g[0] <= n and n <= g[1]:
+                gaps.pop(i)
+                if g[0] == g[1]:
+                    # closes a gap
+                    pass
+                elif n == g[0]:
+                    gaps.insert(i, (g[0] + 1, g[1]))
+                elif n == g[1]:
+                    gaps.insert(i, (g[0], g[1] - 1))
+                else:
+                    # split
+                    gaps.insert(i, (n + 1, g[1]))
+                    gaps.insert(i, (g[0], n - 1))
+                break
+
+    return gaps[0][0]
