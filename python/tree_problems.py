@@ -11,6 +11,7 @@ class TreeNode:
 
 
 def find_lowest_common_ancestor(root, p, q):
+    """Does not assume ordering."""
 
     def _get_path(n, target):
         if not n:
