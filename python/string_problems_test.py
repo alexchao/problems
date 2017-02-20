@@ -5,6 +5,7 @@ import unittest
 from string_problems import reverse_words
 from string_problems import group_anagrams
 from string_problems import longest_substring
+from string_problems import compare_version_numbers
 
 
 class ReverseWordsTest(unittest.TestCase):
@@ -55,6 +56,34 @@ class LongestSubstringTest(unittest.TestCase):
 
     def test_palindrome(self):
         assert longest_substring('abba') == 2 # 'ab'
+
+
+class CompareVersionNumbersTest(unittest.TestCase):
+
+    def test_base_case(self):
+        self.assertEqual(compare_version_numbers('0.1', '13.37'), -1)
+        self.assertEqual(compare_version_numbers('13.37', '0.1'), 1)
+
+    def test_no_dot_releases(self):
+        self.assertEqual(compare_version_numbers('432', '432'), 0)
+        self.assertEqual(compare_version_numbers('3', '29'), -1)
+        self.assertEqual(compare_version_numbers('29', '3'), 1)
+
+    def test_main_version_number(self):
+        self.assertEqual(compare_version_numbers('5.123', '6.123'), -1)
+        self.assertEqual(compare_version_numbers('6.123', '5.123'), 1)
+
+    def test_same_version(self):
+        self.assertEqual(compare_version_numbers('1.02', '1.02'), 0)
+        self.assertEqual(compare_version_numbers('1.2', '1.2'), 0)
+        self.assertEqual(compare_version_numbers('1.2', '1.20'), 0)
+        self.assertEqual(compare_version_numbers('1.2', '1.2.0'), 0)
+        self.assertEqual(compare_version_numbers('1.2', '1.2.0.0'), 0)
+        self.assertEqual(compare_version_numbers('1.2', '1.2.00'), 0)
+
+    def test_dot_release(self):
+        self.assertEqual(compare_version_numbers('1.01', '1.001'), 1)
+        self.assertEqual(compare_version_numbers('1.02', '1.2'), -1)
 
 
 if __name__ == '__main__':

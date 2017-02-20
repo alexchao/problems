@@ -38,3 +38,49 @@ def longest_substring(s):
             max_length = max(max_length, i - start + 1)
         char_last_index[char] = i
     return max_length
+
+
+def compare_version_numbers(v1, v2):
+    """ https://leetcode.com/problems/compare-version-numbers/ """
+    chunks1 = v1.split('.')
+    chunks2 = v2.split('.')
+
+    main1 = int(chunks1.pop(0))
+    main2 = int(chunks2.pop(0))
+
+    if main1 != main2:
+        return (main1 - main2) / abs(main1 - main2)
+
+    i = 0
+    while i < len(chunks1) and i < len(chunks2):
+        dr1 = chunks1[i]
+        dr2 = chunks2[i]
+
+        if len(dr1) == len(dr2):
+            x = int(dr1)
+            y = int(dr2)
+            if x != y:
+                return (x - y) / abs(x - y)
+        else:
+            if len(dr1) > len(dr2):
+                x = int(dr1)
+                y = int(dr2) * pow(10, len(dr1) - len(dr2))
+            else:
+                x = int(dr1) * pow(10, len(dr2) - len(dr1))
+                y = int(dr2)
+            if x != y:
+                return (x - y) / abs(x - y)
+
+        i += 1
+
+    if len(chunks1) > len(chunks2):
+        if sum(map(lambda x: int(x), chunks1[i:])) == 0:
+            return 0
+        return 1
+
+    if len(chunks2) > len(chunks1):
+        if sum(map(lambda x: int(x), chunks2[i:])) == 0:
+            return 0
+        return -1
+
+    return 0
