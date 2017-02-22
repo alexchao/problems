@@ -5,6 +5,18 @@ import unittest
 
 from linked_list_problems import ListNode
 from linked_list_problems import add_two_numbers
+from linked_list_problems import reverse_linked_list
+
+
+class LinkedListTestCase(unittest.TestCase):
+
+    def assert_list(self, head, expected_values):
+        cursor = head
+        list_values = []
+        while cursor:
+            list_values.append(cursor.val)
+            cursor = cursor.next
+        self.assertEqual(list_values, expected_values)
 
 
 class AddTwoNumbersTest(unittest.TestCase):
@@ -76,6 +88,45 @@ class AddTwoNumbersTest(unittest.TestCase):
         assert result.val == 0
         assert result.next.val == 0
         assert result.next.next.val == 1
+
+
+class ReverseLinkedListTest(LinkedListTestCase):
+
+    def test_one(self):
+        ll = ListNode(10)
+        reverse_linked_list(ll)
+        self.assert_list(ll, [10])
+
+    def test_two(self):
+        l1 = ListNode(1)
+        l2 = ListNode(2)
+        l1.next = l2
+        reverse_linked_list(l1)
+        self.assert_list(l2, [2, 1])
+
+    def test_many(self):
+        l1 = ListNode(1)
+        l2 = ListNode(2)
+        l3 = ListNode(3)
+        l4 = ListNode(4)
+        l5 = ListNode(5)
+
+        l1.next = l2
+        l2.next = l3
+        l3.next = l4
+        l4.next = l5
+
+        self.assert_list(l1, [1, 2, 3, 4, 5])
+        self.assert_list(l5, [5])
+
+        reverse_linked_list(l1)
+
+        self.assert_list(l5, [5, 4, 3, 2, 1])
+        self.assert_list(l4, [4, 3, 2, 1])
+        self.assert_list(l3, [3, 2, 1])
+        self.assert_list(l2, [2, 1])
+        self.assert_list(l1, [1])
+
 
 
 if __name__ == '__main__':

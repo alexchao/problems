@@ -33,3 +33,20 @@ def add_two_numbers(l1, l2):
         return l
 
     return _add(l1, l2, False)
+
+
+def reverse_linked_list(head):
+    """Reverse a linked list in place."""
+    new_head = None
+    new_tail = None
+    cursor = head
+    while cursor:
+        original_next = cursor.next
+        if not new_head:
+            new_head = cursor
+            new_tail = cursor
+        else:
+            cursor.next = new_head
+            new_head = cursor
+            new_tail.next = original_next
+        cursor = original_next
