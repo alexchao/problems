@@ -84,3 +84,30 @@ def compare_version_numbers(v1, v2):
         return -1
 
     return 0
+
+
+def find_permuted_substring(s, b):
+    """Anagram substring search. Find all contiguous permutations of
+    smaller string s in larger string b. Can be done in O(len(b)).
+
+    """
+    occurrences = []
+    len_s = len(s)
+    def char_to_index(c):
+        return ord(c) - ord('a')
+
+    counts_of_s = [0]*26
+    for c in s:
+        counts_of_s[char_to_index(c)] += 1
+
+    counts_of_window = [0]*26
+    i = 0
+    while i < len(b):
+        if i >= len_s:
+            counts_of_window[char_to_index(b[i - len_s])] -= 1
+        counts_of_window[char_to_index(b[i])] += 1
+        if counts_of_s == counts_of_window:
+            occurrences.append(i - len_s + 1)
+        i += 1
+
+    return occurrences

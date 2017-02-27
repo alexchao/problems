@@ -6,6 +6,7 @@ from string_problems import reverse_words
 from string_problems import group_anagrams
 from string_problems import longest_substring
 from string_problems import compare_version_numbers
+from string_problems import find_permuted_substring
 
 
 class ReverseWordsTest(unittest.TestCase):
@@ -84,6 +85,22 @@ class CompareVersionNumbersTest(unittest.TestCase):
     def test_dot_release(self):
         self.assertEqual(compare_version_numbers('1.01', '1.001'), 1)
         self.assertEqual(compare_version_numbers('1.02', '1.2'), -1)
+
+
+class FindPermutedStringsTest(unittest.TestCase):
+
+    def test_find_none(self):
+        occurrences = find_permuted_substring('abc', 'aaaabbbbbc')
+        self.assertEqual(occurrences, [])
+
+    def test_example(self):
+        occurrences = find_permuted_substring(
+            'abbc', 'cbabadcbbabbcbabaabccbabc')
+        self.assertEqual(occurrences, [0, 6, 9, 11, 12, 20, 21])
+
+    def test_repeats(self):
+        occurrences = find_permuted_substring('bbc', 'bbbbbbbcbbc')
+        self.assertEqual(occurrences, [5, 6, 7, 8])
 
 
 if __name__ == '__main__':
