@@ -99,6 +99,34 @@ TestCases.getLongestCommonPrefixTests = {
 };
 
 
+TestCases.isOneAwayTests = {
+    'equalStrings': function() {
+        A.assertFalse(M.isOneAway('pale', 'pale'));
+    },
+    'removed': function() {
+        A.assertTrue(M.isOneAway('pale', 'ale'));
+        A.assertTrue(M.isOneAway('pale', 'ple'));
+        A.assertTrue(M.isOneAway('pale', 'pal'));
+    },
+    'inserted': function() {
+        A.assertTrue(M.isOneAway('ale', 'pale'));
+        A.assertTrue(M.isOneAway('ple', 'pale'));
+        A.assertTrue(M.isOneAway('pal', 'pale'));
+    },
+    'replaced': function() {
+        A.assertTrue(M.isOneAway('pale', 'pace'));
+    },
+    'replacedTooMany': function() {
+        A.assertFalse(M.isOneAway('pale', 'bake'));
+    },
+    'insertedTooMany': function() {
+        A.assertFalse(M.isOneAway('pale', 'apales'));
+        A.assertFalse(M.isOneAway('pale', 'paghle'));
+    },
+};
+
+
 Test.runTests(TestCases.mergeSortTests);
 Test.runTests(TestCases.isAdditiveNumberTests);
 Test.runTests(TestCases.getLongestCommonPrefixTests);
+Test.runTests(TestCases.isOneAwayTests);

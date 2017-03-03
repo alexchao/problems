@@ -131,9 +131,53 @@ var Misc = (function() {
         return false;
     };
 
+    let isOneAway = function(s1, s2) {
+        if (s1.length === s2.length) {
+            return _isOneAwayReplaced(s1, s2);
+        } else if (s1.length - s2.length === 1) {
+            return _isOneAwayInserted(s1, s2);
+        } else if (s2.length - s1.length === 1) {
+            return _isOneAwayInserted(s2, s1);
+        }
+        return false;
+    };
+
+    let _isOneAwayReplaced = function(s1, s2) {
+        let foundDiff = false;
+        for (let i = 0; i < s1.length; i++) {
+            if (s1[i] !== s2[i]) {
+                if (foundDiff) {
+                    return false;
+                }
+                foundDiff = true;
+            }
+        }
+        return foundDiff;
+    };
+
+    /**
+     * where s1 = s2.insert(i, c)
+     */
+    let _isOneAwayInserted = function(s1, s2) {
+        let offset = 0;
+        let i = 0;
+        while (i < s2.length) {
+            if (s1[i + offset] !== s2[i]) {
+                if (offset > 0) {
+                    return false;
+                }
+                offset++;
+            } else {
+                i++;
+            }
+        }
+        return true;
+    };
+
     return {
         'isAdditiveNumber': isAdditiveNumber,
-        'getLongestCommonPrefix': getLongestCommonPrefix
+        'getLongestCommonPrefix': getLongestCommonPrefix,
+        'isOneAway': isOneAway
     };
 
 })();
