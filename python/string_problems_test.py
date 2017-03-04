@@ -7,6 +7,7 @@ from string_problems import group_anagrams
 from string_problems import longest_substring
 from string_problems import compare_version_numbers
 from string_problems import find_permuted_substring
+from string_problems import compress_string
 
 
 class ReverseWordsTest(unittest.TestCase):
@@ -101,6 +102,15 @@ class FindPermutedStringsTest(unittest.TestCase):
     def test_repeats(self):
         occurrences = find_permuted_substring('bbc', 'bbbbbbbcbbc')
         self.assertEqual(occurrences, [5, 6, 7, 8])
+
+
+class CompressStringTest(unittest.TestCase):
+
+    def test_compressed_is_longer(self):
+        self.assertEqual(compress_string('abcd'), 'abcd')
+
+    def test_example(self):
+        self.assertEqual(compress_string('aabcccccaaa'), 'a2b1c5a3')
 
 
 if __name__ == '__main__':

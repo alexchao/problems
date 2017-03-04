@@ -111,3 +111,23 @@ def find_permuted_substring(s, b):
         i += 1
 
     return occurrences
+
+
+def compress_string(s):
+    """aabcccccaaa => a2b1c5a3. If compressed string would not become
+    smaller than the original string, just return original string.
+    """
+    compressed = ''
+    i = 0
+    while i < len(s):
+        blockChar = s[i]
+        count = 0
+        while i < len(s) and s[i] == blockChar:
+            count += 1
+            i += 1
+
+        compressed += blockChar + str(count)
+        if len(compressed) >= len(s):
+            return s
+
+    return compressed
