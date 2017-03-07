@@ -68,3 +68,25 @@ def find_kth_to_last(head, k):
         return None
 
     return kcursor
+
+
+def delete(head, value):
+    cursor = head
+    prev = None
+    while cursor:
+        if cursor.val == value:
+            if prev and cursor.next:
+                prev.next = cursor.next
+            elif prev:
+                # deleting last node
+                prev.next = None
+            elif cursor.next:
+                # deleting first node
+                head = cursor.next
+            # completely detach this node
+            cursor.next = None
+            return head
+        prev = cursor
+        cursor = cursor.next
+
+    return head

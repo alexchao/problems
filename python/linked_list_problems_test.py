@@ -5,6 +5,7 @@ import unittest
 
 from linked_list_problems import ListNode
 from linked_list_problems import add_two_numbers
+from linked_list_problems import delete
 from linked_list_problems import find_kth_to_last
 from linked_list_problems import reverse_linked_list
 
@@ -154,17 +155,36 @@ class ReverseLinkedListTest(LinkedListTestCase):
 
 class FindKthToLastTestCase(LinkedListTestCase):
 
+    def setUp(self):
+        self.ll = make_list([10, 20, 30, 40, 50, 60, 70])
+
     def test_base_case(self):
-        ll = make_list([10, 20, 30, 40, 50, 60, 70])
-        self.assertEqual(find_kth_to_last(ll, 2).val, 60)
+        self.assertEqual(find_kth_to_last(self.ll, 2).val, 60)
+        self.assertEqual(find_kth_to_last(self.ll, 6).val, 20)
 
     def test_1st_last_value(self):
-        ll = make_list([10, 20, 30, 40, 50, 60, 70])
-        self.assertEqual(find_kth_to_last(ll, 1).val, 70)
+        self.assertEqual(find_kth_to_last(self.ll, 1).val, 70)
 
     def test_no_value(self):
-        ll = make_list([10, 20, 30, 40, 50, 60, 70])
-        self.assertEqual(find_kth_to_last(ll, 10), None)
+        self.assertEqual(find_kth_to_last(self.ll, 10), None)
+
+
+class DeleteTestCase(LinkedListTestCase):
+
+    def setUp(self):
+        self.ll = make_list([10, 20, 30, 40, 50])
+
+    def test_value_does_not_exist(self):
+        self.assert_list(delete(self.ll, 60), [10, 20, 30, 40, 50])
+
+    def test_delete_head(self):
+        self.assert_list(delete(self.ll, 10), [20, 30, 40, 50])
+
+    def test_delete_inner(self):
+        self.assert_list(delete(self.ll, 20), [10, 30, 40, 50])
+
+    def test_delete_last(self):
+        self.assert_list(delete(self.ll, 50), [10, 20, 30, 40])
 
 
 
