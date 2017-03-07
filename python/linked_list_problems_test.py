@@ -6,6 +6,7 @@ import unittest
 from linked_list_problems import ListNode
 from linked_list_problems import add_two_numbers
 from linked_list_problems import delete
+from linked_list_problems import find_intersection
 from linked_list_problems import find_kth_to_last
 from linked_list_problems import reverse_linked_list
 
@@ -185,6 +186,46 @@ class DeleteTestCase(LinkedListTestCase):
 
     def test_delete_last(self):
         self.assert_list(delete(self.ll, 50), [10, 20, 30, 40])
+
+
+class FindIntersectionTestCase(LinkedListTestCase):
+
+    def test_no_intersection(self):
+        l1 = make_list([10, 20, 30])
+        l2 = make_list([10, 20, 30, 40])
+        self.assertEqual(find_intersection(l1, l2), None)
+
+    def test_middle_intersection(self):
+        l1 = ListNode(1)
+        l2 = ListNode(2)
+        l3 = ListNode(3)
+        l4 = ListNode(4)
+        l5 = ListNode(5)
+        l6 = ListNode(6)
+        l7 = ListNode(7)
+
+        l1.next = l2
+        l2.next = l3
+        l3.next = l4
+        l4.next = l5
+
+        l6.next = l7
+        l7.next = l4
+        self.assertEqual(find_intersection(l1, l6), l4)
+
+    def test_subset(self):
+        l1 = ListNode(1)
+        l2 = ListNode(2)
+        l3 = ListNode(3)
+        l4 = ListNode(4)
+        l5 = ListNode(5)
+
+        l1.next = l2
+        l2.next = l3
+        l3.next = l4
+        l4.next = l5
+
+        self.assertEqual(find_intersection(l1, l3), l3)
 
 
 

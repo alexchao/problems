@@ -90,3 +90,38 @@ def delete(head, value):
         cursor = cursor.next
 
     return head
+
+
+def find_intersection(head1, head2):
+    "Find and return the node where linked lists head1 and head2 intersect."""
+    len1 = 0
+    n1 = head1
+    while n1:
+        len1 += 1
+        n1 = n1.next
+
+    len2 = 0
+    n2 = head2
+    while n2:
+        len2 += 1
+        n2 = n2.next
+
+    if len1 > len2:
+        n1 = head1
+        n2 = head2
+    else:
+        n1 = head2
+        n2 = head1
+
+    i = 0
+    while i < abs(len1 - len2):
+        n1 = n1.next
+        i += 1
+
+    while n1 and n2:
+        if n1 is n2:
+            return n1
+        n1 = n1.next
+        n2 = n2.next
+
+    return None
