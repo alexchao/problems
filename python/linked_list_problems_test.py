@@ -5,7 +5,22 @@ import unittest
 
 from linked_list_problems import ListNode
 from linked_list_problems import add_two_numbers
+from linked_list_problems import find_kth_to_last
 from linked_list_problems import reverse_linked_list
+
+
+def make_list(values):
+    head = None
+    cursor = None
+    for v in values:
+        if not head:
+            head = ListNode(v)
+            cursor = head
+        else:
+            cursor.next = ListNode(v)
+            cursor = cursor.next
+
+    return head
 
 
 class LinkedListTestCase(unittest.TestCase):
@@ -17,6 +32,15 @@ class LinkedListTestCase(unittest.TestCase):
             list_values.append(cursor.val)
             cursor = cursor.next
         self.assertEqual(list_values, expected_values)
+
+
+class MakeListTestCase(LinkedListTestCase):
+
+    def test_empty(self):
+        self.assertEqual(make_list([]), None)
+
+    def test_base_case(self):
+        self.assert_list(make_list([1, 2, 3]), [1, 2, 3])
 
 
 class AddTwoNumbersTest(unittest.TestCase):
@@ -126,6 +150,21 @@ class ReverseLinkedListTest(LinkedListTestCase):
         self.assert_list(l3, [3, 2, 1])
         self.assert_list(l2, [2, 1])
         self.assert_list(l1, [1])
+
+
+class FindKthToLastTestCase(LinkedListTestCase):
+
+    def test_base_case(self):
+        ll = make_list([10, 20, 30, 40, 50, 60, 70])
+        self.assertEqual(find_kth_to_last(ll, 2).val, 60)
+
+    def test_1st_last_value(self):
+        ll = make_list([10, 20, 30, 40, 50, 60, 70])
+        self.assertEqual(find_kth_to_last(ll, 1).val, 70)
+
+    def test_no_value(self):
+        ll = make_list([10, 20, 30, 40, 50, 60, 70])
+        self.assertEqual(find_kth_to_last(ll, 10), None)
 
 
 

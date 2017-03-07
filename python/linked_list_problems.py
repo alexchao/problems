@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # From leetcode.com
-class ListNode(object):
+class ListNode:
 
     def __init__(self, x):
         self.val = x
@@ -50,3 +50,21 @@ def reverse_linked_list(head):
             new_head = cursor
             new_tail.next = original_next
         cursor = original_next
+
+
+def find_kth_to_last(head, k):
+    """Find the kth to last value in the linked list."""
+    cursor = head
+    kcursor = head
+    i = 0
+    while cursor:
+        cursor = cursor.next
+        if i == k:
+            kcursor = kcursor.next
+        else:
+            i += 1
+
+    if i < k:
+        return None
+
+    return kcursor
