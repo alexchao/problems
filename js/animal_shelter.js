@@ -16,6 +16,14 @@ const AS = (function() {
         return { type: type, name: name };
     };
 
+    const Dog = function(name) {
+        return Animal(TYPE_DOG, name);
+    };
+
+    const Cat = function(name) {
+        return Animal(TYPE_CAT, name);
+    };
+
     const AnimalQueue = function() {
         let first = undefined;
         let last = undefined;
@@ -109,7 +117,14 @@ const AS = (function() {
     };
 
     return {
+        Dog: Dog,
+        Cat: Cat,
         Animal: Animal,
+        QueuedAnimal: QAnimal,
+        AnimalQueue: AnimalQueue,
         AnimalShelter: Shelter
     };
 })();
+
+
+exports.AS = AS;
