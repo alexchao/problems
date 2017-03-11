@@ -44,7 +44,7 @@ const animalQueueTests = {
         const qa6 = AS.QueuedAnimal(6, {});
         q.add(qa6);
 
-        // Remove all
+        // Remove all remaining
         [qa3, qa4, qa5, qa6].forEach(function(qa) {
             A.assertEqual(q.peekOrderId(), qa.orderId);
             A.assertEqual(q.remove(), qa);
