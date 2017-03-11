@@ -25,8 +25,8 @@ const AS = (function() {
     };
 
     const AnimalQueue = function() {
-        let first = undefined;
-        let last = undefined;
+        let first = null;
+        let last = null;
 
         const add = function(qAnimal) {
             const newNode = LinkedList(qAnimal);
@@ -45,7 +45,12 @@ const AS = (function() {
 
             const toReturn = first;
             first = first.next;
-            return toReturn;
+
+            if (!first) {
+                last = null;
+            }
+
+            return toReturn.data;
         };
 
         const peekOrderId = function() {
