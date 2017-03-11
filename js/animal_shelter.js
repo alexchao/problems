@@ -106,11 +106,16 @@ const AS = (function() {
         };
 
         const dequeueDog = function() {
-            return animals[TYPE_DOG].remove();
+            return _dequeue(TYPE_DOG);
         };
 
         const dequeueCat = function() {
-            return animals[TYPE_CAT].remove();
+            return _dequeue(TYPE_CAT);
+        };
+
+        const _dequeue = function(type) {
+            const qAnimal = animals[type].remove();
+            return qAnimal ? qAnimal.animal : null;
         };
 
         return {
