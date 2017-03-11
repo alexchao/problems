@@ -26,6 +26,13 @@ var Assert = (function() {
         throw new Error(`${a.toString()} !== ${b.toString()}`);
     };
 
+
+    var assertEqual = (a, b) => { assertStrictEqual(a, b); };
+
+    var assertNull = function(x) {
+        assertStrictEqual(x, null);
+    };
+
     var assertTrue = function(x) {
         if (x === true) { return; }
         throw new Error('Expected true');
@@ -38,6 +45,8 @@ var Assert = (function() {
 
     return {
         'arrayEqual': arrayEqual,
+        'assertEqual': assertEqual,
+        'assertNull': assertNull,
         'assertTrue': assertTrue,
         'assertFalse': assertFalse,
         'assertStrictEqual': assertStrictEqual
