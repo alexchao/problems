@@ -1,8 +1,17 @@
+/**
+ * Animal Shelter exercise from Gayle McDowell's Cracking the Coding
+ * Interview. Exercise 3.6.
+ */
 const AS = (function() {
 
     const TYPE_DOG = 'dog';
     const TYPE_CAT = 'cat';
 
+    /**
+     * Rather than actually making a LinkedList object type, we could
+     * just use a JavaScript array which behaves like linked list
+     * anyway.
+     */
     const LinkedList = function(data) {
         return { next: null, data: data };
     };
