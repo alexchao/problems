@@ -61,7 +61,9 @@ var runTests = function(tests) {
             tests[testName]();
             console.log(`Test OK "${testName}"`);
         } catch (e) {
-            console.log(`Test FAIL "${testName}": "${e.message}"`);
+            let msg = `Test FAIL "${testName}": "${e.message}"\n`;
+            msg += e.stack;
+            console.log(msg);
         }
     });
 };
