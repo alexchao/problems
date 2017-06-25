@@ -183,5 +183,26 @@ var Misc = (function() {
 })();
 
 
+var Strings = (function() {
+
+    let reverseWords = function(s) {
+        let idx = s.indexOf(' ');
+        if (idx === -1) {
+            return s;
+        }
+        return [
+            reverseWords(s.substring(idx + 1)),
+            s.substring(0, idx)
+        ].join(' ');
+    };
+
+    return {
+        'reverseWords': reverseWords
+    };
+
+})();
+
+
 exports.Sort = Sort;
 exports.Misc = Misc;
+exports.Strings = Strings;

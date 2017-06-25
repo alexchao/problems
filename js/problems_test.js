@@ -5,6 +5,7 @@ const Problems = require('./problems.js');
 const A = Test.Assert;
 const S = Problems.Sort;
 const M = Problems.Misc;
+const Strings = Problems.Strings;
 
 
 var TestCases = {};
@@ -126,7 +127,23 @@ TestCases.isOneAwayTests = {
 };
 
 
+TestCases.reverseWordsTests = {
+    'base': function() {
+        A.assertStrictEqual(Strings.reverseWords('dog'), 'dog');
+    },
+    'twoWords': function() {
+        A.assertStrictEqual(Strings.reverseWords('hot dog'), 'dog hot');
+    },
+    'sentence': function() {
+        A.assertStrictEqual(
+            Strings.reverseWords("I don't know"),
+            "know don't I");
+    }
+};
+
+
 Test.runTests(TestCases.mergeSortTests);
 Test.runTests(TestCases.isAdditiveNumberTests);
 Test.runTests(TestCases.getLongestCommonPrefixTests);
 Test.runTests(TestCases.isOneAwayTests);
+Test.runTests(TestCases.reverseWordsTests)
