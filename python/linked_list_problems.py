@@ -37,19 +37,13 @@ def add_two_numbers(l1, l2):
 
 def reverse_linked_list(head):
     """Reverse a linked list in place."""
-    new_head = None
-    new_tail = None
-    cursor = head
-    while cursor:
-        original_next = cursor.next
-        if not new_head:
-            new_head = cursor
-            new_tail = cursor
-        else:
-            cursor.next = new_head
-            new_head = cursor
-            new_tail.next = original_next
-        cursor = original_next
+    new_head = new_tail = head
+    while new_tail.next:
+        tmp = new_tail.next
+        new_tail.next = tmp.next
+        tmp.next = new_head
+        new_head = tmp
+    return new_head
 
 
 def find_kth_to_last(head, k):
